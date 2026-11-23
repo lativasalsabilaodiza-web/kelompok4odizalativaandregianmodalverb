@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Modal Verbs Adventure</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app-root">
+    <div id="game-container"></div>
+
+    <!-- Mobile touch controls overlay (shown only while PLAYING, on touch devices) -->
+    <div id="mobile-controls" class="hidden">
+      <button id="btn-left" class="ctrl-btn" aria-label="Move Left">◀</button>
+      <button id="btn-slide" class="ctrl-btn" aria-label="Slide">▼</button>
+      <button id="btn-jump" class="ctrl-btn" aria-label="Jump">▲</button>
+      <button id="btn-right" class="ctrl-btn" aria-label="Move Right">▶</button>
+    </div>
+
+    <div id="orientation-hint" class="hidden">
+      <p>Rotate your device or widen your window for the best experience 🔄</p>
+    </div>
+  </div>
+
+  <!-- Phaser 3 engine (pinned version) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.70.0/phaser.min.js"></script>
+
+  <!-- Game modules (plain globals, load order matters) -->
+  <script src="audio.js"></script>
+  <script src="customization.js"></script>
+  <script src="questions.js"></script>
+  <script src="character.js"></script>
+  <script src="level.js"></script>
+  <script src="obstacles.js"></script>
+  <script src="backgrounds.js"></script>
+  <script src="gameplay.js"></script>
+  <script src="victory.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

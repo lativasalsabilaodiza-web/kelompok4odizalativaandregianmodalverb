@@ -1,0 +1,184 @@
+/* ======================================================
+   MODAL VERBS ADVENTURE — style.css
+   Handles page layout, responsive scaling container,
+   and the on-screen mobile control buttons.
+   The actual game visuals are drawn inside the Phaser
+   canvas (see game.js) so this file only needs to size
+   and position things around it.
+   ====================================================== */
+
+:root {
+  --sky-top: #5ec8ff;
+  --sky-bottom: #bdf0ff;
+  --turquoise: #1fd1c9;
+  --grass: #4ecb52;
+  --yellow: #ffd93d;
+  --white: #ffffff;
+  --panel-shadow: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  overflow: hidden;
+  font-family: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;
+  touch-action: none;
+}
+
+#app-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The Phaser canvas is injected into this container and
+   the Scale Manager (FIT mode) keeps the aspect ratio. */
+#game-container {
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  max-height: 720px;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 0 40px var(--panel-shadow);
+}
+
+#game-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 8px;
+}
+
+/* ---------- Mobile on-screen controls ---------- */
+#mobile-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#mobile-controls.hidden {
+  display: none;
+}
+
+.ctrl-btn {
+  pointer-events: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid var(--white);
+  background: rgba(31, 209, 201, 0.85);
+  color: var(--white);
+  font-size: 26px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px var(--panel-shadow);
+  user-select: none;
+  touch-action: none;
+}
+
+.ctrl-btn:active {
+  background: rgba(255, 217, 61, 0.9);
+  transform: scale(0.92);
+}
+
+#btn-jump { margin-bottom: 56px; }
+#btn-slide { align-self: flex-end; }
+
+/* ---------- Orientation / small-screen hint ---------- */
+#orientation-hint {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-size: 18px;
+  z-index: 50;
+}
+
+#orientation-hint.hidden {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .ctrl-btn {
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+  }
+}
+
+/* Part 4: mobile-first polish and customization workspace */
+#game-container canvas { border-radius: 12px; }
+.ctrl-btn { min-width:54px; min-height:54px; box-shadow:0 5px 18px rgba(0,0,0,.28); transition:transform .12s,filter .12s; }
+.ctrl-btn:hover { filter:brightness(1.08); }
+.ctrl-btn:active { transform:scale(.9); }
+#mva-customizer { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:clamp(8px,2vw,24px); background:rgba(16,27,44,.78); backdrop-filter:blur(7px); overflow:auto; touch-action:pan-y; }
+#mva-customizer.hidden { display:none; }
+.mva-modal { width:min(1080px,100%); max-height:94dvh; display:flex; flex-direction:column; background:linear-gradient(145deg,#fff,#eafaff); border:2px solid rgba(255,255,255,.9); border-radius:22px; box-shadow:0 22px 70px rgba(0,0,0,.35); overflow:hidden; color:#273043; }
+.mva-modal-head { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; background:linear-gradient(90deg,#1fd1c9,#6fb6ff); color:#fff; }
+.mva-modal-head h2 { margin:0; font-size:clamp(17px,3vw,24px); }
+.mva-close,.mva-modal button { border:0; border-radius:12px; padding:10px 13px; background:#1b9f9b; color:white; font-weight:800; cursor:pointer; touch-action:manipulation; }
+.mva-close { background:rgba(255,255,255,.25); font-size:18px; }
+.mva-modal button:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.mva-tabs { display:flex; gap:8px; padding:10px 14px; background:#f2fbff; overflow-x:auto; }
+.mva-tabs button { white-space:nowrap; background:#d9edf2; color:#273043; }
+.mva-tabs button.active { background:#273043; color:#fff; }
+.mva-modal-body { padding:16px; overflow:auto; overscroll-behavior:contain; }
+.mva-slot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:14px; }
+.mva-slot { min-width:0; padding:14px; border-radius:18px; background:white; box-shadow:0 5px 18px rgba(39,48,67,.1); border:2px solid transparent; }
+.mva-slot.selected { border-color:#1fd1c9; }
+.mva-preview { height:110px; display:grid; place-items:center; border-radius:14px; margin-bottom:10px; background:radial-gradient(circle,#d7faff,#f4f8ff); font-size:54px; }
+.mva-preview img { max-width:100%; max-height:104px; object-fit:contain; }
+.mva-slot input[type=text],.mva-config input,.mva-config textarea { width:100%; min-width:0; padding:9px; margin:5px 0; border:1px solid #cbd8e2; border-radius:9px; font:inherit; }
+.mva-slot small,.mva-audio-row small,.mva-note { display:block; color:#637286; margin:5px 0 9px; }
+.mva-file { display:none; }
+.mva-config { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px 8px; margin:8px 0; }
+.mva-config label { font-size:12px; font-weight:700; min-width:0; }
+.mva-config label:last-child { grid-column:1/-1; }
+.mva-config textarea { font:12px ui-monospace,monospace; }
+.mva-actions { display:flex; flex-wrap:wrap; gap:6px; }
+.mva-actions button { flex:1 1 auto; }
+.mva-audio-controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; padding:12px; margin-bottom:14px; border-radius:14px; background:#eaf7fa; }
+.mva-range { display:grid; gap:5px; font-weight:700; font-size:13px; }
+.mva-range input { width:100%; }
+.mva-audio-list { display:grid; gap:9px; }
+.mva-audio-row { display:grid; grid-template-columns:minmax(150px,1.4fr) minmax(100px,1fr) repeat(5,auto); align-items:center; gap:8px; padding:10px; background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.mva-audio-row small { margin:0; overflow-wrap:anywhere; }
+.mva-modal-body code { background:#eaf0f5; padding:2px 5px; border-radius:5px; }
+.mva-modal-body li { margin:7px 0; }
+@media(max-width:700px) {
+ html,body { overflow:hidden; }
+ #game-container { width:100vw; height:100dvh; max-width:none; max-height:none; }
+ #game-container canvas { border-radius:0; }
+ #mobile-controls { bottom:max(12px,env(safe-area-inset-bottom)); padding:0 12px; }
+ .ctrl-btn { width:clamp(48px,13vw,64px); height:clamp(48px,13vw,64px); font-size:clamp(18px,5vw,24px); }
+ .mva-modal { max-height:96dvh; border-radius:15px; }
+ .mva-modal-body { padding:10px; }
+ .mva-audio-row { grid-template-columns:1fr 1fr; }
+ .mva-audio-row strong,.mva-audio-row small { grid-column:1/-1; }
+ .mva-audio-row button { min-height:42px; }
+}
+@media(orientation:portrait) and (max-width:700px) {
+ #game-container { height:100dvh; }
+}
